@@ -145,6 +145,14 @@ Extends Leaflet&#39;s <code>L.GridLayer</code>.</p>
 <code>function(feat) { return feat.properties.uniqueIdField; }</code>.
 Must be defined for <code>setFeatureStyle</code> to work.</td>
 	</tr>
+	<tr id='vectorgrid-layersordering'>
+		<td><code><b>layersOrdering</b></code></td>
+		<td><code>Function</code>
+		<td><code>undefined</code></td>
+		<td>A function that, given a vector tile, returns an ordered array of layers keys, e.g.
+<code>function(feat) { return ["building","street"]; }</code>.
+It is meant to provide the z-ordering of vector tile layers.</td>
+	</tr>
 </tbody></table>
 
 </section>

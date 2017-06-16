@@ -82,6 +82,8 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 			z: coords.z
 // 			z: this._getZoomForUrl()	/// TODO: Maybe replicate TileLayer's maxNativeZoom
 		};
+		var layersOrdering = this.layersOrdering;
+
 		if (this._map && !this._map.options.crs.infinite) {
 			var invertedY = this._globalTileRange.max.y - coords.y;
 			if (this.options.tms) { // Should this option be available in Leaflet.VectorGrid?
@@ -121,14 +123,14 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 // 			console.log('Vector tile water:', json.layers.water);	// Instance of VectorTileLayer
 
 			// Normalize feature getters into actual instanced features
-            var layersKeys = Object.keys(json.layers);
-            if(this.layersOrdering){
-                layersKeys = this.layersOrdering(json.layers);
+            var layersKeys = json.layers ? Object.keys(json.layers) : json.layers;
+            if(layersOrdering){
+                layersKeys = layersOrdering(json.layers);
             }
 
             for (var layerName in layersKeys) {
 				var feats = [];
-
+				console.debug(layerName,layersKeys,json,json.layers,json.layers[layerName]);
 				for (var i=0; i<json.layers[layerName].length; i++) {
 					var feat = json.layers[layerName].feature(i);
 					feat.geometry = feat.loadGeometry();
