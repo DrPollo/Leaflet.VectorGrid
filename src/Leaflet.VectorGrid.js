@@ -33,6 +33,11 @@ L.VectorGrid = L.GridLayer.extend({
 		// A function that, given a vector feature, returns an unique identifier for it, e.g.
 		// `function(feat) { return feat.properties.uniqueIdField; }`.
 		// Must be defined for `setFeatureStyle` to work.
+
+        // 🍂option layersOrdering: Function = undefined
+        // A function that, given an array of keys (layers of vector tile) returns an ordered array of keys, e.g.
+        // `function(layers) { return layers.sort(function(a,b){return b-a}); }`.
+        // It can be used to filter out layers.
 	},
 
 	initialize: function(options) {
@@ -68,9 +73,14 @@ L.VectorGrid = L.GridLayer.extend({
 		}
 
 		vectorTilePromise.then( function renderTile(vectorTile) {
-			for (var layerName in vectorTile.layers) {
-				this._dataLayerNames[layerName] = true;
-				var layer = vectorTile.layers[layerName];
+            var layersKeys = Object.keys(vectorTile.layers);
+            if(this.layersOrdering){
+                layersKeys = this.layersOrdering(vectorTile.layers);
+            }
+
+            for (var layerName in layersKeys) {
+                this._dataLayerNames[layerName] = true;
+                var layer = vectorTile.layers[layerName];
 
 				var pxPerExtent = this.getTileSize().divideBy(layer.extent);
 

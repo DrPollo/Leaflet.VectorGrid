@@ -121,7 +121,12 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 // 			console.log('Vector tile water:', json.layers.water);	// Instance of VectorTileLayer
 
 			// Normalize feature getters into actual instanced features
-			for (var layerName in json.layers) {
+            var layersKeys = Object.keys(json.layers);
+            if(this.layersOrdering){
+                layersKeys = this.layersOrdering(json.layers);
+            }
+
+            for (var layerName in layersKeys) {
 				var feats = [];
 
 				for (var i=0; i<json.layers[layerName].length; i++) {
