@@ -67,6 +67,8 @@ L.VectorGrid = L.GridLayer.extend({
 
 		var vectorTilePromise = this._getVectorTilePromise(coords);
 
+		var zoom_level = coords.z;
+
 		if (storeFeatures) {
 			this._vectorTiles[this._tileCoordsToKey(coords)] = renderer;
 			renderer._features = {};
@@ -76,7 +78,7 @@ L.VectorGrid = L.GridLayer.extend({
             var layersKeys = Object.keys(vectorTile.layers);
 
             if(this.options.layersOrdering){
-                layersKeys = this.options.layersOrdering(vectorTile.layers);
+                layersKeys = this.options.layersOrdering(vectorTile.layers,zoom_level);
             }
 
             for (var index in layersKeys) {
