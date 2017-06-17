@@ -150,7 +150,7 @@ Must be defined for <code>setFeatureStyle</code> to work.</td>
 		<td><code>Function</code>
 		<td><code>undefined</code></td>
 		<td>A function that, given a vector tile and the zoom level, returns an ordered array of layers keys, e.g.
-<code>function(feat) { return ["building","street"]; }</code>.
+<code>function(layers,zoom) { return ["building","street"]; }</code>.
 It is meant to provide the z-ordering of vector tile layers.</td>
 	</tr>
 </tbody></table>
